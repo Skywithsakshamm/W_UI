@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function() {
+        try {
+          var currentFetch = window.fetch;
+          var defineAccessor = function(obj) {
+            try {
+              var desc = Object.getOwnPropertyDescriptor(obj, 'fetch');
+              if (!desc || !desc.set) {
+                Object.defineProperty(obj, 'fetch', {
+                  get: function() {
+                    return currentFetch;
+                  },
+                  set: function(fn) {
+                    currentFetch = fn;
+                  },
+                  configurable: true,
+                  enumerable: true
+                });
+              }
+            } catch (e) {}
+          };
+
+          defineAccessor(window);
+          if (typeof Window !== 'undefined' && Window.prototype) {
+            defineAccessor(Window.prototype);
+          }
+        } catch (err) {
+          // Safeguard in case environment prevents redefinition
+        }
+      })();
+    </script>
+    <title>MineIntel - AI powered Report Generator Program</title>
+    <meta name="description" content="AI powered Report Generator Program featuring document and PDF analysis, animated intelligence synthesis, and clean dark mode." />
+    <meta property="og:title" content="MineIntel - AI powered Report Generator Program" />
+    <meta property="og:description" content="AI powered Report Generator Program featuring document and PDF analysis, animated intelligence synthesis, and clean dark mode." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/svg+xml" href="/mineintel_logo.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
